@@ -8,7 +8,7 @@
             </div>
             <div class="form-group mb-3 col-6">
                 <label for="date_rec">تاريخ الحجز</label>
-                <input class="form-control" type="date" min="{{ date('Y-m-d') }}" name="date_rec"  wire:model="date_rec" wire:change="filterDay" @readonly(Auth::user()->type == 'user') required >
+                <input class="form-control" type="date" min="{{ date('Y-m-d') }}" name="date_rec"  wire:model="date_rec" wire:change="filterDay" @readonly(Auth::user()->type != 'doctor') required >
             </div>
             <div class="form-group mb-3 col-6">
                 <x-form.input type="number" min="1" name="num_rec" label="رقم الحجز" wire:model="num_rec" readonly required />

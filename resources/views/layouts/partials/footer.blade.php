@@ -213,6 +213,7 @@
     gtag('js', new Date());
     gtag('config', 'UA-56159088-1');
 </script>
+<script src='{{ asset('vendor/livewire/livewire.js') }}'></script>
 @stack('scripts')
 </body>
 </html>

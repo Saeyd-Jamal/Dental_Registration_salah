@@ -55,18 +55,14 @@
                                         <span class="text-muted sr-only">Action</span>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        @can('update', 'App\\Models\User')
                                         <a class="dropdown-item" style="margin: 0.5rem -0.75rem; text-align: right;"
                                             href="{{route('users.edit',$user->id)}}">تعديل</a>
-                                        @endcan
-                                        @can('delete', 'App\\Models\User')
                                         <form action="{{route('users.destroy',$user->id)}}" method="post">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="dropdown-item" style="margin: 0.5rem -0.75rem; text-align: right;"
                                             href="#">حذف</button>
                                         </form>
-                                        @endcan
                                     </div>
                                 </td>
                             </tr>
