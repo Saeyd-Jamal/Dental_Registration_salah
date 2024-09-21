@@ -117,81 +117,36 @@
 </head>
 
 <body>
-    <h1 align="center">حجز الأسنان لتاريخ {{$day}}</h1>
-    <div class="row">
-        <div class="col">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h3 class="card-title">أسنان رجال</h3>
-                    <table class="table blueTable">
-                        <thead>
+    <h1 align="center">تقرير حجز الاسنان  لتاريخ{{$from_date}} - {{$to_date}}</h1>
+        <div class="card shadow">
+            <div class="card-body">
+                <table class="table blueTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>تاريخ اليوم</th>
+                            <th>عدد الحالات</th>
+                            <th>مدفوع</th>
+                            <th>الإجمالي</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($days as $day)
+                            @php
+                                $record = App\Models\Record::where('date_rec', $day);
+                            @endphp
                             <tr>
-                                <th>رقم <br> الحجز</th>
-                                <th>الاسم</th>
-                                <th>نوع <br> الحجز</th>
-                                <th>مدفوع</th>
+                                <td align="center">{{$loop->iteration}}</td>
+                                <td>{{ $day }}</td>
+                                <td>{{ $record->count() }}</td>
+                                <td>{{ $record->where('payment_type', 'مدفوع')->count()?? 0 }}</td>
+                                <td align="center">
+                                    {{$record->where('payment_type', 'مدفوع')->count() * 5}}
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($records as $record)
-                                @if($record['doctor_id'] == '2')
-                                    <tr>
-                                        <td align="center">{{ $record['num_rec'] }}</td>
-                                        <td>{{ $record['patient_name'] }}</td>
-                                        <td>{{ $record['type'] }}</td>
-                                        <td align="center">
-                                            @if ($record['payment_type'] == 'مدفوع')
-                                                <div>
-                                                    <img src="{{public_path('img/check-solid.svg')}}" alt="" style="max-width: 10px;">
-                                                </div>
-                                            @else
-
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col" style="width: 4%;">
-        </div>
-        <div class="col">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h3 class="card-title">أسنان نساء</h3>
-                    <table class="table blueTable">
-                        <thead>
-                            <tr>
-                                <th>رقم <br> الحجز</th>
-                                <th>الاسم</th>
-                                <th>نوع <br> الحجز</th>
-                                <th>مدفوع</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($records as $record)
-                                @if($record['doctor_id'] == '3')
-                                    <tr>
-                                        <td align="center">{{ $record['num_rec'] }}</td>
-                                        <td>{{ $record['patient_name'] }}</td>
-                                        <td>{{ $record['type'] }}</td>
-                                        <td align="center">
-                                            @if ($record['payment_type'] == 'مدفوع')
-                                                <div>
-                                                    <img src="{{public_path('img/check-solid.svg')}}" alt="" style="max-width: 10px;">
-                                                </div>
-                                            @else
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

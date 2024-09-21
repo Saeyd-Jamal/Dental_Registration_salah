@@ -7,13 +7,6 @@
                 <x-form.input type="text" name="patient_name" label="اسم المريض" value="" placeholder="اسم المريض رباعي" required autofocus />
             </div>
             <div class="form-group mb-3 col-6">
-                <label for="date_rec">تاريخ الحجز</label>
-                <input class="form-control" type="date" min="{{ date('Y-m-d') }}" name="date_rec"  wire:model="date_rec" wire:change="filterDay" @readonly(Auth::user()->type == 'user') required >
-            </div>
-            <div class="form-group mb-3 col-6">
-                <x-form.input type="number" min="1" name="num_rec" label="رقم الحجز" wire:model="num_rec" readonly required />
-            </div>
-            <div class="form-group mb-3 col-6">
                 <label for="type">نوع الحجز</label>
                 <select name="type" id="type" class="form-control" required wire:model="type">
                     @if(Auth::user()->type == 'admin')
@@ -42,6 +35,13 @@
                     @endif
 
                 </select>
+            </div>
+            <div class="form-group mb-3 col-6">
+                <label for="date_rec">تاريخ الحجز</label>
+                <input class="form-control" type="date" min="{{ date('Y-m-d') }}" name="date_rec"  wire:model="date_rec" wire:change="filterDay" @readonly(Auth::user()->type == 'user') required >
+            </div>
+            <div class="form-group mb-3 col-6">
+                <x-form.input type="number" min="1" name="num_rec" label="رقم الحجز" wire:model="num_rec" readonly required />
             </div>
             @if(Auth::user()->type != 'doctor')
             <div class="form-group mb-3 col-6">

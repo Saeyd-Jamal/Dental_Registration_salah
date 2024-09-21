@@ -118,4 +118,20 @@ class RecordController extends Controller
         return $pdf->stream();
     }
 
+    public function printMali(Request $request) {
+        $records = Record::whereBetween('date_rec', [$request->from_date, $request->to_date])->get();
+
+        $days = Record::whereBetween('date_rec', [$request->from_date, $request->to_date])
+        ->distinct()
+        ->pluck('date_rec');
+
+        $pdf = PDF::loadView('reportMali',['records' =>  $records, 'days' => $days, 'from_date' => $request->from_date, 'to_date' => $request->to_date],[],
+        [
+            'mode' => 'utf-8',
+            'default_font_size' => 12,
+            'default_font' => 'Arial',
+        ]);
+        return $pdf->stream();
+    }
+
 }

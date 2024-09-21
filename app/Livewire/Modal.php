@@ -18,7 +18,7 @@ class Modal extends Component
     public $num_in_saher;
     public $num_in_dodo;
 
-    
+
     public $date_rec;
     public $num_rec;
     public $doctors;
@@ -82,23 +82,27 @@ class Modal extends Component
 
     public function mount(){
 
-        $doctors = User::where('type', 'doctor')->get();
-
-        $user = Auth::user();
-        if($user->type == 'doctor') {
-            $this->type = "مراجعة";
-        }else{
-            $this->type = "كشفية";
-        }
         $this->date_rec = Carbon::now()->addDay()->format('Y-m-d');
-
-        $this->doctors = $doctors;
 
         $this->num_saher = Constant::where('key', 'num_saher')->first()->value;
         $this->num_dodo = Constant::where('key', 'num_dodo')->first()->value;
 
         $this->num_in_saher = Constant::where('key', 'num_in_saher')->first()->value;
         $this->num_in_dodo = Constant::where('key', 'num_in_dodo')->first()->value;
+
+        $doctors = User::where('type', 'doctor')->get();
+
+        $user = Auth::user();
+        if($user->type == 'doctor') {
+            $this->type = "مراجعة";
+            $this->doctor_id = $user->id;
+            $this->filterDoctor();
+        }else{
+            $this->type = "كشفية";
+        }
+
+        $this->doctors = $doctors;
+
     }
     public function render()
     {

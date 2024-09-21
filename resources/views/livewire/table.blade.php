@@ -30,7 +30,8 @@
                 </div>
             </form>
             @if (Auth::user()->type != 'doctor')
-            <div class="form-group mb-3 col-1">
+            <div class="form-group mb-3 col-2">
+                
                 <form action="{{ route('records.print') }}" id="view_pdf" method="post" class="d-inline" target="_blank">
                     @csrf
                     <input type="hidden" name="records" value="{{ $records }}">
@@ -39,7 +40,7 @@
                         <i class="fe fe-printer"></i>PDF
                     </button>
                 </form>
-
+                {{-- records.printMali --}}
             </div>
             @endif
         </div>
