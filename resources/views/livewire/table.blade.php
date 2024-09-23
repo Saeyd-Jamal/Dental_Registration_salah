@@ -31,7 +31,7 @@
             </form>
             @if (Auth::user()->type != 'doctor')
             <div class="form-group mb-3 col-2">
-                
+
                 <form action="{{ route('records.print') }}" id="view_pdf" method="post" class="d-inline" target="_blank">
                     @csrf
                     <input type="hidden" name="records" value="{{ $records }}">
@@ -40,7 +40,6 @@
                         <i class="fe fe-printer"></i>PDF
                     </button>
                 </form>
-                {{-- records.printMali --}}
             </div>
             @endif
         </div>
@@ -67,18 +66,35 @@
                     <td>{{ $record->doctor->name }}</td>
                     <td>{{ $record->user->name }}</td>
                     <td>
-                        @if (Auth::user()->type != 'doctor')
-                        <form action="{{ route('records.destroy', $record->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fe fe-trash"></i>
-                            </button>
-                        </form>
-                        @endif
+                        <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#model-{{$record->id}}">
+                            <i class="fe fe-trash"></i>
+                        </button>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    @foreach ($records as $record)
+    <div class="modal fade" id="model-{{$record->id}}" tabindex="-1" role="dialog" aria-labelledby="model-{{$record->id}}Label"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="model-{{$record->id}}Label">هل تريد حذف العنصر</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">لا</button>
+                    <form action="{{ route('records.destroy', $record->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">نعم</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
 </div>

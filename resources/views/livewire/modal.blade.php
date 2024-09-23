@@ -49,6 +49,7 @@
                 <select name="payment_type" id="payment_type" class="form-control" required>
                     <option value="مدفوع" selected>مدفوع</option>
                     <option value="مجاني">مجاني</option>
+                    <option value='تحت التحصيل'>تحت التحصيل</option>
                 </select>
             </div>
             @endif

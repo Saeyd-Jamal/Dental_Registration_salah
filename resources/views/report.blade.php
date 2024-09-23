@@ -183,6 +183,10 @@
                                                 <div>
                                                     <img src="{{public_path('img/check-solid.svg')}}" alt="" style="max-width: 10px;">
                                                 </div>
+                                            @elseif ($record['payment_type'] == 'تحت التحصيل')
+                                                <div>
+                                                    <i class="fa fa-clock" aria-hidden="true"></i>
+                                                </div>
                                             @else
                                             @endif
                                         </td>

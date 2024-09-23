@@ -7,8 +7,8 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::post('dental/livewire/update', function () {
-    return redirect()->route('home');
-})->name('livewire.update');
+// Route::post('dental/livewire/update', function () {
+//     return redirect()->route('home');
+// })->name('livewire.update');
 
 require __DIR__.'/dashboard.php';

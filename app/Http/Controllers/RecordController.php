@@ -16,12 +16,12 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $records = Record::where('date_rec', Carbon::now()->format('Y-m-d'))->get();
+        $records = Record::where('date_rec', Carbon::now()->format('Y-m-d'))->orderBy('doctor_id')->get();
 
         $doctors = User::where('type', 'doctor')->get();
 
         if(Auth::user()->type == 'doctor') {
-            $records = Record::where('date_rec', Carbon::now()->format('Y-m-d'))->where('doctor_id', Auth::user()->id)->get();
+            $records = Record::where('date_rec', Carbon::now()->format('Y-m-d'))->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->get();
             $doctors = User::where('type', 'doctor')->where('id', Auth::user()->id)->get();
         }
 

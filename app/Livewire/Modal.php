@@ -36,21 +36,21 @@ class Modal extends Component
 
         $date = $this->date_rec;
 
-        if($this->type == "كشفية") {
-            $records_count = Record::where('date_rec', $date)->where('doctor_id', $this->doctor_id)->count();
+        $records_count = Record::where('date_rec', $date)->where('doctor_id', $this->doctor_id)->count();
 
-            if($this->doctor_id == 2) {
-                $count = $this->num_saher;
-            }
-            if($this->doctor_id == 3) {
-                $count = $this->num_dodo;
-            }
-
+        if($this->doctor_id == 2) {
+            $count = $this->num_saher;
+        }
+        if($this->doctor_id == 3) {
+            $count = $this->num_dodo;
+        }
+        if(isset($count)){
             while($records_count >= $count) {
                 $date = Carbon::parse($date)->addDay()->format('Y-m-d');
                 $records_count = Record::where('date_rec', $date)->where('doctor_id', $this->doctor_id)->count();
             }
         }
+
 
         if($this->type == "مراجعة"){
             $records_count = Record::where('date_rec', $date)->where('doctor_id', $this->doctor_id)->where('type', 'مراجعة')->count();
@@ -62,11 +62,13 @@ class Modal extends Component
                 $count = $this->num_in_dodo;
             }
 
-            while($records_count >= $count) {
-                $date = Carbon::parse($date)->addDay()->format('Y-m-d');
-                $records_count = Record::where('date_rec', $date)->where('doctor_id', $this->doctor_id)->where('type', 'مراجعة')->count();
+            if(isset($count)){
+                while($records_count >= $count) {
+                    $date = Carbon::parse($date)->addDay()->format('Y-m-d');
+                    $records_count = Record::where
+                    ('date_rec', $date)->where('doctor_id', $this->doctor_id)->where('type', 'مراجعة')->count();
+                }
             }
-
         }
 
 
@@ -77,7 +79,6 @@ class Modal extends Component
 
         $this->num_rec = $num_rec;
         $this->date_rec = $date;
-
     }
 
     public function mount(){
@@ -93,6 +94,7 @@ class Modal extends Component
         $doctors = User::where('type', 'doctor')->get();
 
         $user = Auth::user();
+
         if($user->type == 'doctor') {
             $this->type = "مراجعة";
             $this->doctor_id = $user->id;

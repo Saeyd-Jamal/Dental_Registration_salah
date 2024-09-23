@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('records', function (Blueprint $table) {
-            $table->enum('payment_type',['مدفوع','مجاني'])->default('مدفوع')->after('type');
+            $table->enum('payment_type',['مدفوع','مجاني','تحت التحصيل'])->default('مدفوع')->after('type');
         });
     }
 
