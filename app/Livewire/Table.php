@@ -29,13 +29,13 @@ class Table extends Component
     public function filterPaymentType(){
         if($this->payment_type != '') {
             if($this->doctor_id != '') {
-                $this->records = Record::where('payment_type', $this->payment_type)->where('doctor_id', '=', $this->doctor_id)->where('date_rec', $this->day)->orderBy('doctor_id')->get();
+                $this->records = Record::where('payment_type', $this->payment_type)->where('doctor_id', '=', $this->doctor_id)->where('date_rec', $this->day)->orderBy('doctor_id')->orderBy('num_rec')->get();
             }else{
-                $this->records = Record::where('payment_type', $this->payment_type)->where('date_rec', $this->day)->orderBy('doctor_id')->get();
+                $this->records = Record::where('payment_type', $this->payment_type)->where('date_rec', $this->day)->orderBy('doctor_id')->orderBy('num_rec')->get();
             }
         }else{
             if($this->doctor_id != '') {
-                $this->records = Record::where('doctor_id', '=', $this->doctor_id)->where('date_rec', $this->day)->orderBy('doctor_id')->get();
+                $this->records = Record::where('doctor_id', '=', $this->doctor_id)->where('date_rec', $this->day)->orderBy('doctor_id')->orderBy('num_rec')->get();
             }else{
                 $this->records = Record::where('date_rec', $this->day)->get();
             }
@@ -44,21 +44,21 @@ class Table extends Component
 
     public function filterDoctor(){
         if($this->doctor_id != '') {
-            $this->records = Record::where('doctor_id', '=', $this->doctor_id)->where('date_rec', $this->day)->orderBy('doctor_id')->get();
+            $this->records = Record::where('doctor_id', '=', $this->doctor_id)->where('date_rec', $this->day)->orderBy('doctor_id')->orderBy('num_rec')->get();
         }else{
-            $this->records = Record::where('date_rec', $this->day)->orderBy('doctor_id')->get();
+            $this->records = Record::where('date_rec', $this->day)->orderBy('doctor_id')->orderBy('num_rec')->get();
         }
     }
     public function filterDay(){
 
         if(Auth::user()->type != 'doctor') {
             if($this->doctor_id != '') {
-                $this->records = Record::where('doctor_id', '=', $this->doctor_id)->where('date_rec', $this->day)->orderBy('doctor_id')->get();
+                $this->records = Record::where('doctor_id', '=', $this->doctor_id)->where('date_rec', $this->day)->orderBy('doctor_id')->orderBy('num_rec')->get();
             }else{
-                $this->records = Record::where('date_rec', $this->day)->orderBy('doctor_id')->get();
+                $this->records = Record::where('date_rec', $this->day)->orderBy('doctor_id')->orderBy('num_rec')->get();
             }
         }else{
-            $this->records = Record::where('date_rec', $this->day)->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->get();
+            $this->records = Record::where('date_rec', $this->day)->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->orderBy('num_rec')->get();
         }
     }
 
@@ -66,14 +66,14 @@ class Table extends Component
 
 
         if(Auth::user()->type != 'doctor') {
-            $this->records = Record::where('patient_name', 'LIKE', '%'.$name.'%')->orderBy('doctor_id')->get();
+            $this->records = Record::where('patient_name', 'LIKE', '%'.$name.'%')->orderBy('doctor_id')->orderBy('num_rec')->get();
             if($name == '') {
-                $this->records = Record::where('date_rec', $this->day)->orderBy('doctor_id')->get();
+                $this->records = Record::where('date_rec', $this->day)->orderBy('doctor_id')->orderBy('num_rec')->get();
             }
         }else{
-            $this->records = Record::where('patient_name', 'LIKE', '%'.$name.'%')->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->get();
+            $this->records = Record::where('patient_name', 'LIKE', '%'.$name.'%')->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->orderBy('num_rec')->get();
             if($name == '') {
-                $this->records = Record::where('date_rec', $this->day)->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->get();
+                $this->records = Record::where('date_rec', $this->day)->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->orderBy('num_rec')->get();
             }
         }
     }

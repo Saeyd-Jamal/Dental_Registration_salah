@@ -16,12 +16,12 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $records = Record::where('date_rec', Carbon::now()->format('Y-m-d'))->orderBy('doctor_id')->get();
+        $records = Record::where('date_rec', Carbon::now()->format('Y-m-d'))->orderBy('doctor_id')->orderBy('num_rec')->get();
 
         $doctors = User::where('type', 'doctor')->get();
 
         if(Auth::user()->type == 'doctor') {
-            $records = Record::where('date_rec', Carbon::now()->format('Y-m-d'))->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->get();
+            $records = Record::where('date_rec', Carbon::now()->format('Y-m-d'))->where('doctor_id', Auth::user()->id)->orderBy('doctor_id')->orderBy('num_rec')->get();
             $doctors = User::where('type', 'doctor')->where('id', Auth::user()->id)->get();
         }
 
@@ -43,22 +43,15 @@ class RecordController extends Controller
     public function store(Request $request)
     {
 
-        $last_record = Record::where('date_rec', $request->date_rec)->where('doctor_id', $request->doctor_id)->latest()->first();
-
-        $num_rec = $request->num_rec;
-
-        if($last_record != null) {
-            if(($last_record->num_rec + 1) != $num_rec) {
-                return redirect()->route('records.index')->with('danger', 'رقم الحجز غير صحيح');
-            }
-        }
-
         if($request->type == 'مراجعة') {
             $request->merge([
                 'payment_type' => 'مجاني'
             ]);
         }
+
+        $name = $request->first_name . ' ' . $request->father_name . ' ' . $request->grandfather_name . ' ' . $request->family_name;
         $request->merge([
+            'name' => $name,
             'user_id' => $request->user()->id
         ]);
 

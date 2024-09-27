@@ -3,8 +3,22 @@
     @csrf
     <div class="modal-body">
         <div class="row">
-            <div class="form-group mb-3 col-12">
-                <x-form.input type="text" name="patient_name" label="اسم المريض" value="" placeholder="اسم المريض رباعي" required autofocus />
+            <div class="container-fluid col-12">
+                <label for="first_name">اسم المريض</label>
+                <div class="row">
+                    <div class="form-group mb-3 col-3">
+                        <x-form.input type="text" name="first_name" placeholder="المريض" required autofocus />
+                    </div>
+                    <div class="form-group mb-3 col-3">
+                        <x-form.input type="text" name="father_name"  placeholder="الاب" />
+                    </div>
+                    <div class="form-group mb-3 col-3">
+                        <x-form.input type="text" name="grandfather_name"  placeholder="الجد" />
+                    </div>
+                    <div class="form-group mb-3 col-3">
+                        <x-form.input type="text" name="family_name" placeholder="العائلة" required />
+                    </div>
+                </div>
             </div>
             <div class="form-group mb-3 col-6">
                 <label for="type">نوع الحجز</label>

@@ -29,12 +29,21 @@ class Modal extends Component
 
     public function filterDay()
     {
-        $this->filterDoctor();
+        $day = Carbon::parse($this->date_rec);
+        $this->filterDoctor($day);
     }
-    public function filterDoctor()
+    public function filterDoctor($day = null)
     {
 
-        $date = $this->date_rec;
+        $date = $day != null ? $this->date_rec : Carbon::now()->addDay();
+
+        // تحقق إذا كان اليوم التالي هو يوم الجمعة
+        $date = Carbon::parse($date)->copy();
+        if ($date->isFriday()) {
+            $date = Carbon::parse($date)->addDay()->format('Y-m-d');
+        }else{
+            $date = Carbon::parse($date)->format('Y-m-d');
+        }
 
         $records_count = Record::where('date_rec', $date)->where('doctor_id', $this->doctor_id)->count();
 
@@ -75,6 +84,7 @@ class Modal extends Component
         $last_record = Record::where('date_rec', $date)->where('doctor_id', $this->doctor_id)->latest()->first();
 
         $num_rec = $last_record != null ? ($last_record->num_rec ?? 0) + 1 : 1;
+
 
 
         $this->num_rec = $num_rec;

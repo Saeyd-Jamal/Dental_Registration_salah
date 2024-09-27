@@ -185,9 +185,12 @@
                                                 </div>
                                             @elseif ($record['payment_type'] == 'تحت التحصيل')
                                                 <div>
-                                                    <i class="fa fa-clock" aria-hidden="true"></i>
+                                                    <i class="fe fe-circle" aria-hidden="true"></i>
                                                 </div>
                                             @else
+                                            <div>
+                                                F
+                                            </div>
                                             @endif
                                         </td>
                                     </tr>

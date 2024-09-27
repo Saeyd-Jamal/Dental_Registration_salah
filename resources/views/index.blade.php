@@ -25,7 +25,7 @@
     <!-- Modal -->
     <div class="modal fade" id="createRec" tabindex="-1" role="dialog" aria-labelledby="createRecLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createRecLabel">حجز جديد</h5>
